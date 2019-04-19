@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { Platform, StyleSheet, Text, View, TextInput, FlatList, YellowBox, ScrollView, Button, TouchableOpacity } from "react-native";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -23,25 +23,19 @@ export default class App extends Component {
       places: []
     };
   }
-  onClickHander(action) {
+  onClickHander(action, data) {
     let places = [...this.state.places];
     switch (action) {
       case "ADD":
-        places.push(this.state.placeName);
-        this.setState({ places, placeName: "" });
+        places.push({ key: Math.random(), value: this.state.placeName });
+        break;
+      case "DELETE":
+        places.splice(data, 1);
+        break;
     }
+    this.setState({ places, placeName: "" }, () => console.log(this.state.places));
   }
-  renderPlaces(places) {
-    if (places.length) {
-      return places.map((place, index) => {
-        return (
-          <Text key={index}>
-            {index}:{place}.
-          </Text>
-        );
-      });
-    } else return <Text>No places Added yet!</Text>;
-  }
+
   render() {
     const { placeName, places } = this.state;
     return (
@@ -50,10 +44,16 @@ export default class App extends Component {
           <TextInput placeholder="Enter Something" style={{ width: 300 }} onChangeText={placeName => this.setState({ placeName })} value={placeName} />
           <Button title="Add" onPress={() => this.onClickHander("ADD")} />
         </View>
-        <View style={styles.placesSection}>
+        <FlatList
+          data={this.state.places}
+          renderItem={info => (
+            <TouchableOpacity onPress={() => this.onClickHander("DELETE")}>
+              <Text>{info.item.value}.</Text>
+            </TouchableOpacity>
+          )}
+        >
           <Text>Places</Text>
-          {this.renderPlaces(places)}
-        </View>
+        </FlatList>
       </View>
     );
   }
@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     alignItems: "center",
-    backgroundColor: "#cc0c"
+    backgroundColor: "#eee"
   }
 });
