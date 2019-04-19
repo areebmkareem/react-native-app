@@ -7,8 +7,8 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, TextInput, FlatList, YellowBox, ScrollView, Button, TouchableOpacity } from "react-native";
-
+import { Platform, StyleSheet, Text, View, TextInput, FlatList, Image, YellowBox, ScrollView, Button, TouchableOpacity } from "react-native";
+import imageView from "./src/assets/test.jpg";
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android: "Double tap R on your keyboard to reload,\n" + "Shake or press menu button for dev menu"
@@ -27,7 +27,7 @@ export default class App extends Component {
     let places = [...this.state.places];
     switch (action) {
       case "ADD":
-        places.push({ key: Math.random(), value: this.state.placeName });
+        places.push({ key: String(Math.random()), value: this.state.placeName, image: imageView });
         break;
       case "DELETE":
         places.splice(data, 1);
@@ -44,16 +44,19 @@ export default class App extends Component {
           <TextInput placeholder="Enter Something" style={{ width: 300 }} onChangeText={placeName => this.setState({ placeName })} value={placeName} />
           <Button title="Add" onPress={() => this.onClickHander("ADD")} />
         </View>
-        <FlatList
-          data={this.state.places}
-          renderItem={info => (
-            <TouchableOpacity onPress={() => this.onClickHander("DELETE")}>
-              <Text>{info.item.value}.</Text>
-            </TouchableOpacity>
-          )}
-        >
-          <Text>Places</Text>
-        </FlatList>
+        <View style={styles.placesSection}>
+          <FlatList
+            data={this.state.places}
+            renderItem={info => (
+              <TouchableOpacity onPress={() => this.onClickHander("DELETE", info.index)}>
+                <View style={styles.placeCard}>
+                  <Image style={styles.placeImage} source={info.item.image} />
+                  <Text>{info.item.value}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
       </View>
     );
   }
@@ -75,9 +78,20 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   placesSection: {
-    width: "100%",
-    padding: 10,
+    flex: 1,
+    width: "100%"
+  },
+  placeCard: {
     alignItems: "center",
-    backgroundColor: "#eee"
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    backgroundColor: "#eee",
+    padding: 10,
+    marginBottom: 10
+  },
+  placeImage: {
+    height: 30,
+    width: 30,
+    marginRight: 3
   }
 });
