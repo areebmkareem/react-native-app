@@ -13,7 +13,7 @@ const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
   android: "Double tap R on your keyboard to reload,\n" + "Shake or press menu button for dev menu"
 });
-
+import Icons from "react-native-vector-icons/MaterialIcons";
 // type Props = {};
 export default class App extends Component {
   constructor(props) {
@@ -50,6 +50,7 @@ export default class App extends Component {
             renderItem={info => (
               <TouchableOpacity onPress={() => this.onClickHander("DELETE", info.index)}>
                 <View style={styles.placeCard}>
+                  <Icons name="accessibility" />
                   <Image style={styles.placeImage} source={info.item.image} />
                   <Text>{info.item.value}</Text>
                 </View>
