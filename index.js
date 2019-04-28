@@ -4,7 +4,7 @@
 import React from "react";
 import { Navigation } from "react-native-navigation";
 import App from "./App";
-import { Provider } from "react-redux";
+import { Provider } from "redux";
 import configureStore from "./src/store/configureStore";
 import Authentication from "./src/screens/auth/Authentication";
 const store = configureStore();
@@ -14,8 +14,8 @@ const appMain = () => (
   </Provider>
 );
 
-Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => Authentication);
-Navigation.registerComponent(`example.Overlay`, () => appMain);
+Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => Authentication, Provider, store);
+Navigation.registerComponent(`example.Overlay`, () => App, Provider, store);
 
 Navigation.events().registerAppLaunchedListener(() => {
   // Navigation.showOverlay({
@@ -35,7 +35,14 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              name: "navigation.playground.WelcomeScreen"
+              name: "navigation.playground.WelcomeScreen",
+              options: {
+                topBar: {
+                  title: {
+                    text: "Login"
+                  }
+                }
+              }
             }
           }
         ]
