@@ -7,7 +7,8 @@ class Authentication extends React.Component {
       component: {
         name: "example.Overlay",
         passProps: {
-          text: "Pushed screen"
+          text: "Helo",
+          why: "sad"
         },
         options: {
           topBar: {
@@ -18,6 +19,7 @@ class Authentication extends React.Component {
         }
       }
     });
+    // https://medium.com/react-native-training/react-native-navigation-v2-by-wix-getting-started-7d647e944132
   }
   render() {
     return (

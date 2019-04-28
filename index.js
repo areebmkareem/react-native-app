@@ -38,9 +38,7 @@ Navigation.events().registerAppLaunchedListener(() => {
               name: "navigation.playground.WelcomeScreen",
               options: {
                 topBar: {
-                  title: {
-                    text: "Login"
-                  }
+                  visible: false
                 }
               }
             }
