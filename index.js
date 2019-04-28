@@ -15,13 +15,48 @@ const appMain = () => (
 );
 
 Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => Authentication);
+Navigation.registerComponent(`example.Overlay`, () => appMain);
 
 Navigation.events().registerAppLaunchedListener(() => {
+  // Navigation.showOverlay({
+  //   component: {
+  //     name: "example.Overlay",
+  //     options: {
+  //       overlay: {
+  //         interceptTouchOutside: true
+  //       }
+  //     }
+  //   }
+  // });
   Navigation.setRoot({
     root: {
-      component: {
-        name: "navigation.playground.WelcomeScreen"
+      stack: {
+        id: "AppId",
+        children: [
+          {
+            component: {
+              name: "navigation.playground.WelcomeScreen"
+            }
+          }
+        ]
       }
     }
   });
+  // Navigation.setStackRoot(this.props.componentId, [
+  //   {
+  //     component: {
+  //       name: "navigation.playground.WelcomeScreen",
+  //       passProps: {
+  //         text: "Root screen"
+  //       },
+  //       options: {
+  //         animations: {
+  //           setStackRoot: {
+  //             enabled: true
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // ]);
 });

@@ -38,6 +38,7 @@ export default class App extends Component {
 
   render() {
     const { placeName, places } = this.state;
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <View style={styles.InputSection}>
