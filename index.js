@@ -13,9 +13,13 @@ const appMain = () => (
     <App />
   </Provider>
 );
+import TabOne from "./src/screens/Home/TabOne";
+import TabTwo from "./src/screens/Home/TabTwo";
 
 Navigation.registerComponent(`navigation.playground.WelcomeScreen`, () => Authentication, Provider, store);
 Navigation.registerComponent(`example.Overlay`, () => App, Provider, store);
+Navigation.registerComponent(`tabOne`, () => TabOne, Provider, store);
+Navigation.registerComponent(`tabTwo`, () => TabTwo, Provider, store);
 
 Navigation.events().registerAppLaunchedListener(() => {
   // Navigation.showOverlay({

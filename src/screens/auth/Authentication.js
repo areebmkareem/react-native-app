@@ -1,24 +1,64 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Navigation } from "react-native-navigation";
+import Icon from "react-native-vector-icons/MaterialIcons";
+
 class Authentication extends React.Component {
   onClickHandler() {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: "example.Overlay",
-        passProps: {
-          text: "Helo",
-          why: "sad"
-        },
-        options: {
-          topBar: {
-            title: {
-              text: "Pushed screen title"
-            }
+    Icon.getImageSource("accessibility", 30).then(srcc => {
+      console.log("[PROMIS]", srcc, srcc[0]);
+      Navigation.setRoot({
+        root: {
+          bottomTabs: {
+            children: [
+              {
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: "tabOne",
+                        passProps: {
+                          text: "This is tab 1"
+                        }
+                      }
+                    }
+                  ],
+                  options: {
+                    bottomTab: {
+                      text: "Tab 1",
+                      icon: srcc,
+                      testID: "FIRST_TAB_BAR_BUTTON"
+                    }
+                  }
+                }
+              },
+              {
+                stack: {
+                  children: [
+                    {
+                      component: {
+                        name: "tabTwo",
+                        passProps: {
+                          text: "This is tab 2"
+                        }
+                      }
+                    }
+                  ],
+                  options: {
+                    bottomTab: {
+                      text: "Tab 2",
+                      icon: srcc,
+                      testID: "FIRST_TAB_BAR_BUTTON"
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
-      }
+      });
     });
+
     // https://medium.com/react-native-training/react-native-navigation-v2-by-wix-getting-started-7d647e944132
   }
   render() {
